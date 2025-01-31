@@ -173,6 +173,13 @@ export const Flip = polymorphicFactory<FlipFactory>((_props, ref) => {
     return { transform: `rotateX(${rotateValue}deg)` };
   }
 
+  function getFrontRotation() {
+    if (direction === "horizontal") {
+      return { transform: "rotateX(0deg)" };
+    }
+    return { transform: "rotateY(0deg)" };
+  }
+
   function getBackRotation() {
     if (direction === 'horizontal') {
       return { transform: 'rotateY(180deg)' };
@@ -205,7 +212,7 @@ export const Flip = polymorphicFactory<FlipFactory>((_props, ref) => {
     >
       <Box ref={ref} {...getStyles('root')} {...others}>
         <div ref={containerRef} {...getStyles('flip-inner')} style={getDirectionIn()}>
-          <div {...getStyles('flip-content')} style={{ zIndex: 0 }}>
+          <div {...getStyles('flip-content')} style={{ zIndex: 0, ...getFrontRotation() }}>
             {frontChild}
           </div>
           <div {...getStyles('flip-content')} style={getBackRotation()}>
